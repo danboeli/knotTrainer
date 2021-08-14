@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { Knot } from '../knot';
-import { KnotFormComponent } from '../knot-form/knot-form.component';
 import { DomSanitizer } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
-
+import { KnotApiService } from '../knot-api.service';
 
 @Component({
   selector: 'app-home',
@@ -12,9 +9,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  title = 'Knot Trainer';
-  readonly ROOT_URL = environment.BACKEND_URL;
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {};
+  constructor(private knotAPI: KnotApiService, private sanitizer: DomSanitizer) {};
+
   knots: any;
   randomKnot: Knot = {
     title: "",
@@ -23,13 +19,11 @@ export class HomeComponent {
   };
   
   getKnots() {
-    this.knots = this.http.get(this.ROOT_URL+ '/knots');
+    this.knotAPI.getKnots().subscribe(res => this.knots = res);
   }
 
   getRandomKnot() {
-    this.http.get<any>(this.ROOT_URL+ '/knots/random', {responseType: 'json'}).subscribe(res => {
-      this.randomKnot = res;
-    });
+    this.knotAPI.getRandomKnot().subscribe(res => this.randomKnot = <Knot>res);
   }
 
   transform() {

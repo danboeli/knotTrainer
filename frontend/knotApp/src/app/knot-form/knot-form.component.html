@@ -19,6 +19,6 @@
         <div class="alert alert-danger" *ngIf="!knotLink.valid">Knot Video Link is required.</div>
     </div>
     <button class="btn btn-primary" [disabled]="myForm.invalid" (click)="postKnot(knotNameVar.value, DescriptionVar.value, knotLink.value)">Submit</button>
-    <div *ngIf="post_status === 200">{{message}}</div>
-    <div class="alert alert-danger"  *ngIf="post_status != 200 && post_status != -1">{{message}}</div>
+    <div *ngIf="responseStatus === 200">{{message}}</div>
+    <div class="alert alert-danger"  *ngIf="responseStatus != 200 && responseStatus != 0">{{message}}</div>
 </form>
