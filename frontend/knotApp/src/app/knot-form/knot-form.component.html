@@ -1,0 +1,24 @@
+<h2>Create new Knot</h2>
+<form #myForm="ngForm">
+    <div class="form-group">
+        <label for="knotName">Knot Name</label>
+        <input required pattern="^[\S].*" #knotNameVar="ngModel" name="knotName" ngModel id="knotName" type="text" class="form-control">
+        <div class="alert alert-danger" *ngIf="knotNameVar.errors">
+            <div *ngIf="knotNameVar.errors.required">Knot Name is required.</div>
+            <div *ngIf="knotNameVar.errors.pattern">Knot Name must not start with a space character.</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="knotDescription">Description</label>
+        <textarea required #DescriptionVar="ngModel" name="knotDescription" ngModel id="knotDescription" type="text" cols="30" rows="10" class="form-control"></textarea>    
+        <div class="alert alert-danger" *ngIf="!DescriptionVar.valid">Knot Description is required.</div>
+    </div>
+    <div class="form-group">
+        <label for="knotLink">YouTube Link</label>
+        <input required #knotLink="ngModel" name="knotLink" ngModel id="knotLink" type="text" class="form-control">    
+        <div class="alert alert-danger" *ngIf="!knotLink.valid">Knot Video Link is required.</div>
+    </div>
+    <button class="btn btn-primary" [disabled]="myForm.invalid" (click)="postKnot(knotNameVar.value, DescriptionVar.value, knotLink.value)">Submit</button>
+    <div *ngIf="post_status === 200">{{message}}</div>
+    <div class="alert alert-danger"  *ngIf="post_status != 200 && post_status != -1">{{message}}</div>
+</form>

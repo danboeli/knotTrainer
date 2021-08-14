@@ -1,0 +1,23 @@
+<hr><br>
+<button class="btn btn-primary" (click)="getRandomKnot()">Get Random Knot</button>
+<div *ngIf="randomKnot.title!=''">
+    <br>
+    Practice 
+    knot <h2>{{randomKnot.title}}</h2> for the following purpose: <br> {{randomKnot.description}}
+    <br>
+    <div class="container">
+        <iframe 
+            [src]="transform()" 
+            frameborder="0" 
+            allowfullscreen 
+            class="video">
+        </iframe>
+    </div>
+</div>
+
+<br><hr><br>
+
+<button class="btn btn-secondary" (click)="getKnots()">Get All Knots</button>
+<div *ngFor = "let knot of knots | async">
+    {{knot | json}}
+</div>
